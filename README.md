@@ -1,4 +1,5 @@
 Zadání projektu:
+
 Projekt sql.engeto - výzkumné otázky
 
 Výzkumné otázky

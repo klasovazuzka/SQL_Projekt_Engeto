@@ -10,7 +10,7 @@ FROM czechia_payroll cp;
 
 SELECT *
 FROM czechia_payroll_industry_branch cpib;
---------------------------------------------------------------------------
+-------------------------------------------------------------------------
 
 SELECT *
 FROM countries c;

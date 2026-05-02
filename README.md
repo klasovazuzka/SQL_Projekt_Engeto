@@ -1,2 +1,2 @@
-Závěrečný projekt SQL.Engeto
+Závěrečný Projekt SQL_Engeto
 

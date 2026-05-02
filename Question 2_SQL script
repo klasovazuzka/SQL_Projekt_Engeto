@@ -1,0 +1,40 @@
+--2. Kolik je možné si koupit litrů mléka a kilogramů chleba za první a poslední 
+--srovnatelné období v dostupných datech cen a mezd?
+WITH wages AS (
+    -- 1. Zjištění průměrné roční mzdy za celou ČR --
+    SELECT 
+        payroll_year AS rok,
+        ROUND(AVG(value), 0) AS prumerna_mzda
+    FROM czechia_payroll
+    WHERE value_type_code = 5958 
+      AND calculation_code = 200 
+      AND value IS NOT NULL
+    GROUP BY payroll_year
+),
+prices AS (
+    -- 2. Zjištění průměrné ceny mléka a chleba za dané roky --
+    SELECT 
+        EXTRACT(YEAR FROM date_from) AS rok,
+        category_code,
+        ROUND(CAST(AVG(value) AS NUMERIC), 2) AS prumerna_cena
+    FROM czechia_price
+    WHERE category_code IN (111301, 114201) 
+    GROUP BY EXTRACT(YEAR FROM date_from), category_code
+)
+-- 3. Spojení mezd a cen a výpočet kupní síly pro první a poslední dostupný rok --
+SELECT 
+    w.rok,
+    cpc.name AS potravina,
+    p.prumerna_cena AS cena_za_jednotku,
+    w.prumerna_mzda,
+    ROUND(w.prumerna_mzda / p.prumerna_cena) AS kolik_si_koupim
+FROM wages w
+JOIN prices p 
+    ON w.rok = p.rok
+JOIN czechia_price_category cpc 
+    ON p.category_code = cpc.code
+WHERE w.rok IN (
+    (SELECT MIN(rok) FROM prices), 
+    (SELECT MAX(rok) FROM prices)
+)
+ORDER BY cpc.name, w.rok;

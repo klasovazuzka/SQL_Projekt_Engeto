@@ -32,26 +32,21 @@ Výzkumné otázky:
 5) Má výška HDP vliv na změny ve mzdách a cenách potravin? Neboli, pokud HDP vzroste výrazněji v jednom roce, projeví se to na cenách potravin či mzdách ve stejném nebo následujícím roce výraznějším růstem?
 
 Odpovědi:
-1) 
+
 2)Na základě analýzy databází mezd a cen potravin jsem zjistila, že prvním rokem, pro který máme k dispozici obě datové sady (srovnatelné období), je rok 2006, a posledním dostupným rokem je rok 2018.
 
 Z výsledků vyplývá následující porovnání kupní síly:
-
 Chléb (konzumní kmínový)
-
 V roce 2006 si občan s průměrnou hrubou mzdou (21 084 Kč) mohl při průměrné ceně 16,12 Kč/kg koupit celkem 1 308 kg chleba.
-
 V roce 2018 průměrná mzda vzrostla na 33 039 Kč a cena chleba na 24,24 Kč/kg. Za průměrnou mzdu tak bylo možné pořídit 1 363 kg chleba.
 
-Rozdíl: Množství chleba, které si lze koupit za průměrnou mzdu, se zvýšilo o 55 kg.
+Množství chleba, které si lze koupit za průměrnou mzdu, se zvýšilo o 55 kg.
 
 Mléko (polotučné pasterované)
-
 V roce 2006 si bylo možné z průměrné mzdy (21 084 Kč) při ceně 14,44 Kč/l koupit 1 460 litrů mléka.
-
 V roce 2018 při průměrné mzdě (33 039 Kč) a ceně 19,82 Kč/l se toto množství zvýšilo na 1 667 litrů mléka.
 
-Rozdíl: Množství mléka, které si lze koupit za průměrnou mzdu, se zvýšilo o 207 litrů.
+Množství mléka, které si lze koupit za průměrnou mzdu, se zvýšilo o 207 litrů.
 
 Shrnutí:
 Ačkoliv v absolutních číslech cena obou základních potravin mezi lety 2006 a 2018 vzrostla, průměrné mzdy rostly rychlejším tempem. Díky tomu se reálná dostupnost chleba i mléka pro širokou veřejnost v tomto období prokazatelně zvýšila.

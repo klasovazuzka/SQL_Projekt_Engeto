@@ -33,39 +33,3 @@ Výzkumné otázky:
 
 Odpovědi:
 
-1) Rostou v průběhu let mzdy ve všech odvětvích, nebo v některých klesají?
-
-Mzdy nerostou ve všech odvětvích lineárně; v historii existují případy, kdy průměrná mzda v konkrétních odvětvích meziročně klesla.
-Níže jsou klíčová zjištění z dat:
-Nejčastější poklesy: Odvětví Těžba a dobývání zaznamenalo v sledovaném období hned 4 meziroční poklesy (roky 2009, 2013, 2014 a 2016).
-
-Kritické roky:
-Rok 2013 byl pro mzdy v ČR velmi nepříznivý – k poklesu došlo v naprosté většině sledovaných odvětví (např. Informační a komunikační činnosti, Peněžnictví, Stavebnictví).
-Rok 2021 ukázal poklesy v odvětvích jako Vzdělávání, Kulturní a zábavní činnosti nebo Zemědělství.
-
-Příklady výrazných poklesů:
-V roce 2013 v odvětví Peněžnictví a pojišťovnictví klesla průměrná mzda o 4 484 Kč oproti předchozímu roku.
-V roce 2020 v odvětví Činnosti v oblasti nemovitostí klesla mzda o 2 150 Kč.
-
-Závěr: 
-Ačkoliv je dlouhodobý trend mezd rostoucí, existují specifické roky a odvětví, kde dochází k propadům. Odpověď pro tvůj projekt tedy zní: V některých odvětvích mzdy v určitých letech klesají.
-
-2) Na základě analýzy databází mezd a cen potravin jsem zjistila, že prvním rokem, pro který máme k dispozici obě datové sady (srovnatelné období), je rok 2006, a posledním dostupným rokem je rok 2018.
-
-Z výsledků vyplývá následující porovnání kupní síly:
-Chléb (konzumní kmínový)
-V roce 2006 si občan s průměrnou hrubou mzdou (21 084 Kč) mohl při průměrné ceně 16,12 Kč/kg koupit celkem 1 308 kg chleba.
-V roce 2018 průměrná mzda vzrostla na 33 039 Kč a cena chleba na 24,24 Kč/kg. Za průměrnou mzdu tak bylo možné pořídit 1 363 kg chleba.
-
-Množství chleba, které si lze koupit za průměrnou mzdu, se zvýšilo o 55 kg.
-
-Mléko (polotučné pasterované)
-V roce 2006 si bylo možné z průměrné mzdy (21 084 Kč) při ceně 14,44 Kč/l koupit 1 460 litrů mléka.
-V roce 2018 při průměrné mzdě (33 039 Kč) a ceně 19,82 Kč/l se toto množství zvýšilo na 1 667 litrů mléka.
-
-Množství mléka, které si lze koupit za průměrnou mzdu, se zvýšilo o 207 litrů.
-
-Závěr:
-Ačkoliv v absolutních číslech cena obou základních potravin mezi lety 2006 a 2018 vzrostla, průměrné mzdy rostly rychlejším tempem. Díky tomu se reálná dostupnost chleba i mléka pro širokou veřejnost v tomto období prokazatelně zvýšila.
-
-3) Která kategorie potravin zdražuje nejpomaleji (je u ní nejnižší percentuální meziroční nárůst)? 

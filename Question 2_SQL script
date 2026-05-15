@@ -1,40 +1,27 @@
---2. Kolik je možné si koupit litrů mléka a kilogramů chleba za první a poslední 
---srovnatelné období v dostupných datech cen a mezd?
-WITH wages AS (
-    -- 1. Zjištění průměrné roční mzdy za celou ČR --
+--2. Kolik je možné si koupit litrů mléka a kilogramů chleba za první a poslední srovnatelné období v dostupných datech cen a mezd?--
+-- Zjištění prvního a posledního roku přímo z primární tabulky
+WITH min_max_years AS (
     SELECT 
-        payroll_year AS rok,
-        ROUND(AVG(value), 0) AS prumerna_mzda
-    FROM czechia_payroll
-    WHERE value_type_code = 5958 
-      AND calculation_code = 200 
-      AND value IS NOT NULL
-    GROUP BY payroll_year
-),
-prices AS (
-    -- 2. Zjištění průměrné ceny mléka a chleba za dané roky --
-    SELECT 
-        EXTRACT(YEAR FROM date_from) AS rok,
-        category_code,
-        ROUND(CAST(AVG(value) AS NUMERIC), 2) AS prumerna_cena
-    FROM czechia_price
-    WHERE category_code IN (111301, 114201) 
-    GROUP BY EXTRACT(YEAR FROM date_from), category_code
+        MIN(year) AS min_year,
+        MAX(year) AS max_year
+    FROM t_zuzana_klasova_project_sql_primary_final
+    --beru jen roky, kde mám jak mzdy, tak ceny
+    WHERE avg_price IS NOT NULL AND avg_wage IS NOT NULL
 )
--- 3. Spojení mezd a cen a výpočet kupní síly pro první a poslední dostupný rok --
 SELECT 
-    w.rok,
-    cpc.name AS potravina,
-    p.prumerna_cena AS cena_za_jednotku,
-    w.prumerna_mzda,
-    ROUND(w.prumerna_mzda / p.prumerna_cena) AS kolik_si_koupim
-FROM wages w
-JOIN prices p 
-    ON w.rok = p.rok
-JOIN czechia_price_category cpc 
-    ON p.category_code = cpc.code
-WHERE w.rok IN (
-    (SELECT MIN(rok) FROM prices), 
-    (SELECT MAX(rok) FROM prices)
+    year AS rok,
+    food_category AS potravina,
+    -- Zprůměruju cenu a mzdu pro jistotu, kdyby tam bylo více záznamů za odvětví
+    ROUND(AVG(avg_price)::numeric, 2) AS cena_za_jednotku,
+    ROUND(AVG(avg_wage)::numeric, 0) AS prumerna_mzda,
+    -- Samotný výpočet koupěschopnosti
+    ROUND((AVG(avg_wage) / AVG(avg_price))::numeric, 0) AS kolik_si_koupim
+FROM t_zuzana_klasova_project_sql_primary_final
+WHERE year IN (
+    (SELECT min_year FROM min_max_years),
+    (SELECT max_year FROM min_max_years)
 )
-ORDER BY cpc.name, w.rok;
+-- Vyfiltruji jen chleba a mléko (přesné názvy Mléko polotučné pasterované,Chléb konzumní kmínový)
+AND food_category IN ('Mléko polotučné pasterované', 'Chléb konzumní kmínový')
+GROUP BY year, food_category
+ORDER BY food_category, year;

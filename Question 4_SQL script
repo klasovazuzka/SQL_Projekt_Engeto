@@ -2,7 +2,7 @@
 
 WITH yearly_averages AS (
     -- 1. Krok: Nejdříve potřebuji z mé tabulky spočítat průměrnou mzdu a cenu za celou ČR pro každý rok.
-    -- (Zprůměruji tedy všechna odvětví a všechny kategorie potravin dohromady).
+    -- (Zprůměruji tedy odvětví a kategorie potravin dohromady)
     SELECT 
         year,
         AVG(avg_wage) AS avg_yearly_wage,
@@ -12,8 +12,8 @@ WITH yearly_averages AS (
     GROUP BY year
 ),
 yearly_lags AS (
-    -- 2. Krok: Ke každému roku si pomocí LAG připojím hodnoty z roku předchozího.
-    -- Tady už nepotřebuji PARTITION BY, protože máme jen jeden řádek pro každý rok.
+    -- 2. Krok: Ke každému roku si pomocí fce LAG připojím hodnoty z roku předchozího
+    -- Tady už nepotřebuji PARTITION BY, protože mám jen jeden řádek pro každý rok
     SELECT 
         year,
         avg_yearly_wage,
@@ -32,14 +32,14 @@ growth_calc AS (
     -- Vyfiltruji první rok, kde nemám data k porovnání
     WHERE prev_year_wage IS NOT NULL AND prev_year_price IS NOT NULL
 )
--- 4. Krok:Od růstu cen odečtu růst mezd.
+-- 4. Krok:Od růstu cen odečtu růst mezd
 SELECT 
     year AS rok,
     wage_growth_pct AS rust_mezd_v_procentech,
     price_growth_pct AS rust_cen_v_procentech,
     -- Odečtu dvě procentuální hodnoty od sebe
     (price_growth_pct - wage_growth_pct) AS rozdil_v_procentech,
-    -- Přidám textový sloupec ANO/NE s CASE
+    -- Přidám textový sloupec ANO/NE s fcí CASE
     CASE 
         WHEN (price_growth_pct - wage_growth_pct) > 10 THEN 'Ano (rozdíl > 10 %)'
         ELSE 'Ne'

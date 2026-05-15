@@ -1,39 +1,35 @@
---Náhled datasetu--
+--Náhled primární tabulky--
 SELECT * 
 FROM t_zuzana_klasova_project_SQL_primary_final;
-
 -------------------------------------------------------------
 --1.Rostou v průběhu let mzdy ve všech odvětvích, nebo v některých klesají?--
-
-WITH payroll_trend AS (
+WITH wage_trends AS (
+    -- 1. Krok: Získám unikátní záznamy pro každý rok a odvětví a přiřadím mzdu z předchozího roku
     SELECT 
-        cp.payroll_year AS rok,
-        cpib.name AS odvetvi,
-        ROUND(AVG(cp.value)) AS prumerna_mzda,
-        --- Funkce LAG vrátí hodnotu mzdy z předchozího roku pro dané odvětví ---
-        LAG(ROUND(AVG(cp.value))) OVER (PARTITION BY cp.industry_branch_code ORDER BY cp.payroll_year) AS mzda_predchozi_rok
-    FROM czechia_payroll cp
-    --- Připojíme číselník odvětví, abychom viděli jejich názvy v češtině ---
-    LEFT JOIN czechia_payroll_industry_branch cpib 
-        ON cp.industry_branch_code = cpib.code
-    WHERE cp.value_type_code = 5958     -- Průměrná mzda --
-      AND cp.calculation_code = 200     -- Přepočtený počet zaměstnanců --
-      AND cp.industry_branch_code IS NOT NULL  -- Pouze konkrétní odvětví (vynecháme celkový průměr ČR)
-    GROUP BY cp.payroll_year, cpib.name, cp.industry_branch_code
+        year,
+        industry_branch,
+        avg_wage,
+        -- Funkce LAG mi pro každé odvětví (PARTITION BY) seřazené podle času (ORDER BY) najde loňskou mzdu
+        LAG(avg_wage) OVER (PARTITION BY industry_branch ORDER BY year) AS prev_year_wage
+    FROM t_zuzana_klasova_project_sql_primary_final
+    WHERE industry_branch IS NOT NULL
+    -- Používám GROUP BY, abych odstranila případné duplicity
+    GROUP BY year, industry_branch, avg_wage
 )
+-- 2. Krok: Vypočítám rozdíl a určím trend
 SELECT 
-    rok,
-    odvetvi,
-    prumerna_mzda,
-    mzda_predchozi_rok,
-    --- Spočítáme rozdíl mezi aktuálním a předchozím rokem ---
-    prumerna_mzda - mzda_predchozi_rok AS rozdil_v_kc,
-    --- Označíme, zda mzda klesla nebo stoupla ---
+    year AS rok,
+    industry_branch AS odvetvi,
+    -- Opět využiji ::numeric pro jistotu, aby funkce ROUND fungovala bezchybně
+    ROUND(avg_wage::numeric, 0) AS prumerna_mzda,
+    ROUND(prev_year_wage::numeric, 0) AS mzda_predchozi_rok,
+    ROUND((avg_wage - prev_year_wage)::numeric, 0) AS rozdil_v_kc,
+    -- Vyhodnocení, zda mzda rostla nebo klesla pomocí CASE
     CASE 
-        WHEN mzda_predchozi_rok IS NULL THEN 'První rok v datech'
-        WHEN prumerna_mzda > mzda_predchozi_rok THEN 'Růst'
-        WHEN prumerna_mzda < mzda_predchozi_rok THEN 'Pokles'
+        WHEN prev_year_wage IS NULL THEN 'První rok v datech'
+        WHEN avg_wage > prev_year_wage THEN 'Růst'
+        WHEN avg_wage < prev_year_wage THEN 'Pokles'
         ELSE 'Beze změny'
     END AS trend
-FROM payroll_trend
+FROM wage_trends
 ORDER BY odvetvi, rok;
